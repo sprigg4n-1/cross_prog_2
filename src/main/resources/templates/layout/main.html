@@ -1,21 +1,140 @@
 <!DOCTYPE html>
 <html th:lang="|${#locale.language}-${#locale.country}|"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:x-transition="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <link rel="stylesheet" th:href="@{/css/application.css}">
-    
 </head>
-<body>
-<main layout:fragment="content">
-</main>
+<body class="flex min-h-screen" x-data="toggleView()" >
 
-<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}"></script>
-<th:block layout:fragment="script-content">
 
-</th:block>
+
+<aside class="h-screen bg-neutral-900 text-white fixed w-72" x-show="show"
+       x-transition:enter="transition ease-in duration-300"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-out duration-100"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0 -translate-x-full">
+
+    <div class="relative px-5 py-6 w-full h-full flex flex-col items-center gap-10" >
+        <h1 class="text-2xl uppercase text-red-100 font-bold" >Spring boot app</h1>
+
+        <nav class="w-full">
+            <ul class="w-full flex flex-col gap-5">
+                <li>
+                    <a class="block w-full py-2 bg-cyan-900 text-right pr-10 text-xl hover:bg-cyan-700 hover:pr-14 duration-300 rounded-md" href="#">Home</a>
+                </li>
+
+                <li>
+                    <a class="block w-full py-2 bg-cyan-900 text-right pr-10 text-xl hover:bg-cyan-700 hover:pr-14 duration-300 rounded-md" href="#">Tasks</a>
+                </li>
+
+                <li>
+                    <a class="block w-full py-2 bg-cyan-900 text-right pr-10 text-xl hover:bg-cyan-700 hover:pr-14 duration-300 rounded-md" href="#">Calendar</a>
+                </li>
+
+                <li>
+                    <a class="block w-full py-2 bg-cyan-900 text-right pr-10 text-xl hover:bg-cyan-700 hover:pr-14 duration-300 rounded-md" href="#">Activity</a>
+                </li>
+            </ul>
+        </nav>
+
+        <button
+                class="group h-10 bg-gray-500 mt-auto w-full hover:bg-gray-800 duration-300"
+                @click="close"
+
+        >
+            <span class="lowercase opacity-25 text-xl font-bold group-hover:opacity-100 duration-300">Close</span>
+        </button>
+    </div>
+
+
+</aside>
+
+<div class="bg-zinc-900 text-white flex-1 duration-300" :class="show ? 'pl-72 ' : 'pl-0'">
+    <div class="flex flex-col min-h-screen">
+        <header class="px-5 py-6 bg-zinc-950 flex gap-2 justify-between items-center" >
+            <button class="group bg-gray-500 mt-auto px-5 py-2 hover:bg-gray-800 duration-300" @click="open" x-show="!show" x-transition >
+                <span class="lowercase opacity-25 text-sm font-bold group-hover:opacity-100 duration-300">open</span>
+            </button>
+
+            <button @click="openModal" class="bg-blue-300 px-3 py-2 font-medium text-zinc-200 hover:bg-blue-400 duration-300">Log in</button>
+
+
+            </header>
+        <main class="flex-1 px-5 py-2">
+
+        </main>
+        <footer class="mt-auto px-5 py-2 bg-zinc-950"></footer>
+    </div>
+</div>
+
+<div
+     class="w-screen h-screen z-10 bg-black bg-opacity-50 t-0 l-0" :class="showModal ? 'fixed' : 'hidden'">
+    <form
+          class="flex flex-col justify-between p-5 gap-10 w-1/3 h-1/2 bg-gray-800 rounded-2xl translate-y-1/2 mx-auto items-center">
+        <label class="flex gap-2 flex-col w-full">
+            <span class="text-white text-xl font-medium">E-mail:</span>
+            <input class="flex-1 text-black text-xl" type="email">
+        </label>
+        <label class="flex gap-2 flex-col  w-full">
+            <span class="text-white text-xl font-medium">Password:</span>
+            <input class="flex-1 text-black text-xl" type="password">
+        </label>
+
+        <button type="button" @click="closeModal" class="block w-32 font-medium mt-auto bg-indigo-900 text-white py-3 hover:bg-indigo-800 duration-300" >Log in</button>
+    </form>
+</div>
+
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
+
+<script>
+    function toggleView() {
+        return {
+            show: true,
+
+            toggle() {
+                this.show = !this.show;
+                console.log(`side ` + this.show)
+            },
+
+            close() {
+                this.show = false;
+                console.log(`side ` + this.show)
+
+            },
+
+            open() {
+                this.show = true;
+                console.log(`side ` + this.show)
+            },
+
+            showModal: false,
+
+            toggleModal() {
+                this.showModal = !this.showModal;
+                console.log(`modal ` + this.showModal)
+            },
+
+            closeModal() {
+                this.showModal = false;
+                console.log(`modal ` + this.showModal)
+
+            },
+
+            openModal() {
+                this.showModal = true;
+                console.log(`modal ` + this.showModal)
+            },
+        }
+    }
+
+</script>
+
 </body>
 </html>

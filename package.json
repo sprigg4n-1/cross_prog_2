@@ -19,6 +19,7 @@
     "tailwindcss": "^3.4.1"
   },
   "scripts": {
+    "start": "npm run build && npm run watch",
     "build": "npm-run-all --parallel build:*",
     "build:html": "recursive-copy \"src/main/resources/templates\" target/classes/templates -w",
     "build:css": "mkdirp target/classes/static/css && postcss src/main/resources/static/css/*.css -d target/classes/static/css",

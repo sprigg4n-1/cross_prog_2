@@ -41,7 +41,8 @@
     <groupId>org.webjars.npm</groupId>
     <artifactId>alpinejs</artifactId>
     <version>3.13.2</version>
-</dependency></dependencies>
+</dependency>
+    </dependencies>
 
 	<build><resources><resource>
     <directory>src/main/resources</directory>
