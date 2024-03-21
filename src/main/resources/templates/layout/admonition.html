@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<div layout:fragment="admonition(type)" class="flex mb-4 p-2 w-2/4 gap-2 text-zinc-900 text-xl"
+     th:classappend="${type == 'ready'? 'bg-blue-100' : 'bg-yellow-100'}">
+    <div th:text="${type}" class="uppercase font-bold"></div>
+    <div layout:fragment="message"></div>
+</div>
+</body>
+</html>

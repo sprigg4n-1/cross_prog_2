@@ -1,0 +1,6 @@
+<label th:fragment="input(text, labelStyle, inputStyle, btnStyle, svgContent)" th:class="${labelStyle}">
+    <button th:class="${btnStyle}">
+        <svg th:replace="${svgContent}"></svg>
+    </button>
+    <input type="text" th:placeholder="${text}" th:class="${inputStyle}"/>
+</label>
