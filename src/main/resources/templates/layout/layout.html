@@ -120,6 +120,64 @@
 <script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer
 ></script>
 <th:block layout:fragment="page-scripts">
+    <script>
+        const closeSideBarBtn = document.querySelector('#close-sidebar-btn'),
+            openSideBarBtn = document.querySelector('#open-sidebar-btn'),
+            sidebar = document.querySelector('#sidebar'),
+            mainContent = document.querySelector('#main-content'),
+            closeLoginFormBtn = document.querySelector('#close-login-form'),
+            openLoginFormBtn = document.querySelector('#open-login-form'),
+            loginForm = document.querySelector('#login-form');
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                loginForm.style.display = 'none'
+            }
+        })
+
+        loginForm.addEventListener('click', (e) => {
+            console.log(e.target.tagName)
+            if (e.target === loginForm) {
+                loginForm.style.display = 'none'
+            }
+        })
+
+
+        // close and open sidebar
+        closeSideBarBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openSideBarBtn.classList.remove('hidden')
+            sidebar.style.transform = "translateX(-100%)"
+            mainContent.style.paddingLeft = '0'
+            console.log("close")
+        })
+
+        openSideBarBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openSideBarBtn.classList.add('hidden')
+            sidebar.style.transform = ""
+            mainContent.style.paddingLeft = '18rem'
+            console.log("open")
+        })
+
+        // close and open login form
+        closeLoginFormBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            loginForm.style.display = 'none'
+
+            console.log("close modal")
+        })
+
+        openLoginFormBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            loginForm.style.position = 'fixed'
+            loginForm.style.display = 'block'
+            console.log("open modal")
+        })
+
+    </script>
 </th:block>
 </body>
 </html>

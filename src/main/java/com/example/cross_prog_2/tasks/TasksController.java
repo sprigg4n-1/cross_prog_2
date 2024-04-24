@@ -1,15 +1,15 @@
-package com.example.cross_prog_2;
+package com.example.cross_prog_2.tasks;
 
+import ch.qos.logback.core.model.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
-public class HomeController {
+@RequestMapping("/tasks")
+public class TasksController {
     @GetMapping
-    public String index(Model model) {
-        return "index";
+    public String tasks(Model model) {
+        return "tasks/list";
     }
 }
