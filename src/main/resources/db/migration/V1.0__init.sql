@@ -5,4 +5,4 @@ CREATE TABLE tt_tasks (
     checked BOOLEAN NOT NULL,
     date TIMESTAMP NOT NULL,
     PRIMARY KEY (id)
-)
+);

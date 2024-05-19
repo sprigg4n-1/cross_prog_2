@@ -15,7 +15,17 @@
 
 <section layout:fragment="page-content">
 
-    <h1 class="mb-10">Tasks page</h1>
+    <div class="flex flex-col items-center justify-between mb-10">
+        <h1 class="text-2xl font-bold" th:text="#{tasks.title}" >Tasks</h1>
+    </div>
+
+    <div class="flex flex-col gap-5">
+        <ul class="text-white text-md gap-5 flex flex-col items-center justify-center" >
+
+            <li th:each="task : ${tasks}" th:insert="fragments/taskList :: taskItem(task=${task}, hideOnMobile=true)"></li>
+        </ul>
+        <div th:replace="~{fragments/pagination :: controls(page=${tasks})}"></div>
+    </div>
 
 </section>
 

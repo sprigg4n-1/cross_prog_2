@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import jakarta.persistence.EntityManager;
@@ -53,6 +55,36 @@ class TaskRepositoryTest {
         assertThat(jdbcTemplate.queryForObject("SELECT important FROM tt_tasks", Boolean.class)).isEqualTo(true);
         assertThat(jdbcTemplate.queryForObject("SELECT checked FROM tt_tasks", Boolean.class)).isEqualTo(false);
         assertThat(jdbcTemplate.queryForObject("SELECT date FROM tt_tasks", LocalDateTime.class)).isEqualTo(LocalDateTime.of(2024, 12, 12, 12, 0));
+    }
+
+    @Test
+    void testFindAllPageable() {
+        saveTask(8);
+        Sort sort = Sort.by(Sort.Direction.ASC, "task");
+
+        assertThat(repository.findAll(PageRequest.of(0, 5, sort)))
+                .hasSize(5)
+                .extracting(Task::getTask)
+                .containsExactly("task 0", "task 1", "task 2", "task 3", "task 4");
+
+        assertThat(repository.findAll(PageRequest.of(1, 5, sort)))
+                .hasSize(3)
+                .extracting(Task::getTask)
+                .containsExactly("task 5","task 6", "task 7");
+
+        assertThat(repository.findAll(PageRequest.of(2, 5, sort))).isEmpty();
+    }
+
+    private void saveTask(int numberOfTasks) {
+        for (int i = 0; i < numberOfTasks; i++) {
+            repository.save(new Task(
+                    repository.nextId(),
+                    "task " + i,
+                    false,
+                    false,
+                    LocalDateTime.of(2024, 12, 12, 12, 0)
+            ));
+        }
     }
 
     @TestConfiguration
