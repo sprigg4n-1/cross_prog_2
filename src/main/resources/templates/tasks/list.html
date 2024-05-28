@@ -44,6 +44,7 @@
                 <button type="submit" class="btn btn-primary">Add Task</button>
             </div>
         </form>
+
     </div>
 
     <div class="flex flex-col gap-5">
@@ -55,6 +56,46 @@
     </div>
 
 </section>
+
+
+<th:block layout:fragment="page-scripts">
+
+    <script>
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteForm = document.getElementById('deleteForm');
+        const deleteTaskIdInput = document.getElementById('deleteTaskId');
+        const closeButton = document.querySelector('.close_delete_modal');
+        const cancelButton = document.getElementById('cancelButton');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const taskId = button.getAttribute('data-task-id');
+                deleteTaskIdInput.value = taskId;
+                deleteForm.action = '/tasks/delete/' + taskId;
+                deleteModal.classList.remove('hidden');
+                deleteModal.classList.add('fixed');
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            deleteModal.classList.add('hidden');
+            deleteModal.classList.remove('fixed');
+        });
+
+        cancelButton.addEventListener('click', () => {
+            deleteModal.classList.add('hidden');
+            deleteModal.classList.remove('fixed');
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == deleteModal) {
+                deleteModal.classList.add('hidden');
+                deleteModal.classList.remove('fixed');
+            }
+        });
+    </script>
+</th:block>
 
 
 </body>

@@ -7,10 +7,12 @@
 <body>
     <ul>
         <li th:fragment="taskItem(task, hideOnMobile)" class="bg-zinc-700 flex flex-col gap-2 p-2">
-            <p th:text="${task.task}">Task Description</p>
+            <p th:text="${task.todoTask.task}">Task Description</p>
             <p th:text="${task.checked}" th:classappend="${hideOnMobile} ? 'block sm:hidden' : ''">Checked Status</p>
             <p th:text="${task.important}" th:classappend="${hideOnMobile} ? 'block sm:hidden' : ''" >Importance</p>
             <p th:text="${task.date}" th:classappend="${hideOnMobile} ? 'block sm:hidden' : ''">Due Date</p>
+            <a th:href="@{/tasks/edit/{id}(id=${task.id.asString()})}" class="btn btn-secondary">Edit</a>
+            <button type="button" class="btn btn-danger delete-btn" th:data-task-id="${task.id.asString()}">Delete</button>
         </li>
     </ul>
 </body>

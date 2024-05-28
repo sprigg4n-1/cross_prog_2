@@ -6,4 +6,5 @@ import org.springframework.data.domain.Pageable;
 public interface TaskService {
     Task createTask(CreateTaskParameters createTaskParameters);
     Page<Task> getTasks(Pageable pageable);
+    void deleteTask(TaskId id);
 }

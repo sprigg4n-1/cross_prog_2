@@ -2,6 +2,7 @@ package com.example.cross_prog_2;
 
 import com.example.cross_prog_2.task.CreateTaskParameters;
 import com.example.cross_prog_2.task.TaskService;
+import com.example.cross_prog_2.task.TodoTask;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -37,6 +38,6 @@ public class DataBaseInitializer implements CommandLineRunner {
         boolean checked = faker.bool().bool();
         LocalDateTime date = LocalDateTime.ofInstant(faker.date().birthday().toInstant(), ZoneId.systemDefault());
 
-        return new CreateTaskParameters(task, important, checked, date);
+        return new CreateTaskParameters(new TodoTask(task), important, checked, date);
     }
 }

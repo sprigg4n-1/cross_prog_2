@@ -1,9 +1,9 @@
-package com.example.cross_prog_2.task;
+    package com.example.cross_prog_2.task;
 
-import jakarta.validation.constraints.NotNull;
+    import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+    import java.time.LocalDateTime;
 
-public record CreateTaskParameters( String task, boolean important, boolean checked, LocalDateTime date) {
+    public record CreateTaskParameters( TodoTask task, boolean important, boolean checked, LocalDateTime date) {
 
-}
+    }

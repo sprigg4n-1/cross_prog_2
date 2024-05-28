@@ -5,6 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+import java.util.UUID;
+
 @Service
 @Transactional
 public class TaskServiceImpl implements TaskService {
@@ -16,10 +19,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task createTask(CreateTaskParameters createTaskParameters) {
-        TaskId taskId = taskRepository.nextId();
-
+        UUID taskId = UUID.randomUUID();
         var task = new Task(
-                taskId,
+                new TaskId(taskId),
                 createTaskParameters.task(),
                 createTaskParameters.important(),
                 createTaskParameters.checked(),
@@ -33,5 +35,14 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Page<Task> getTasks(Pageable pageable) {
         return taskRepository.findAll(pageable);
+    }
+
+
+    @Override
+    public void deleteTask(TaskId id) {
+        if (!taskRepository.existsById(id)) {
+            throw new NoSuchElementException("Task not found");
+        }
+        taskRepository.deleteById(id);
     }
 }

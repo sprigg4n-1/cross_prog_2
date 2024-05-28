@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Task extends AbstractEntity<TaskId> {
 
     @NotNull
-    private String task;
+    private TodoTask todoTask;
 
     @NotNull
     private boolean important;
@@ -25,45 +25,45 @@ public class Task extends AbstractEntity<TaskId> {
     public Task() {
     }
 
-    public Task(TaskId id, String task, boolean important, boolean checked, LocalDateTime date) {
+    public Task(TaskId id, TodoTask todoTask, boolean important, boolean checked, LocalDateTime date) {
         super(id);
-        this.task = task;
+        this.todoTask = todoTask;
         this.important = important;
         this.checked = checked;
         this.date = date;
     }
 
-    public @NotNull String getTask() {
-        return task;
-    }
 
-    public void setTask(@NotNull String task) {
-        this.task = task;
-    }
-
-    @NotNull
     public boolean isImportant() {
         return important;
     }
 
-    public void setImportant(@NotNull boolean important) {
+    public void setImportant( boolean important) {
         this.important = important;
     }
 
-    @NotNull
+
     public boolean isChecked() {
         return checked;
     }
 
-    public void setChecked(@NotNull boolean checked) {
+    public void setChecked( boolean checked) {
         this.checked = checked;
     }
 
-    public @NotNull LocalDateTime getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(@NotNull LocalDateTime date) {
+    public void setDate( LocalDateTime date) {
         this.date = date;
+    }
+
+    public TodoTask getTodoTask() {
+        return todoTask;
+    }
+
+    public void setTodoTask( TodoTask todoTask) {
+        this.todoTask = todoTask;
     }
 }

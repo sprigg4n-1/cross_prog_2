@@ -46,7 +46,7 @@ class TaskRepositoryTest {
     @Test
     void testSaveTask() {
         TaskId id = repository.nextId();
-        repository.save(new Task(id, "task1", true, false, LocalDateTime.of(2024, 12, 12, 12, 0)));
+        repository.save(new Task(id, new TodoTask("task1"), true, false, LocalDateTime.of(2024, 12, 12, 12, 0)));
 
         entityManager.flush();
 
@@ -64,12 +64,12 @@ class TaskRepositoryTest {
 
         assertThat(repository.findAll(PageRequest.of(0, 5, sort)))
                 .hasSize(5)
-                .extracting(Task::getTask)
+                .extracting(task -> task.getTodoTask().getTask())
                 .containsExactly("task 0", "task 1", "task 2", "task 3", "task 4");
 
         assertThat(repository.findAll(PageRequest.of(1, 5, sort)))
                 .hasSize(3)
-                .extracting(Task::getTask)
+                .extracting(task -> task.getTodoTask().getTask())
                 .containsExactly("task 5","task 6", "task 7");
 
         assertThat(repository.findAll(PageRequest.of(2, 5, sort))).isEmpty();
@@ -79,7 +79,7 @@ class TaskRepositoryTest {
         for (int i = 0; i < numberOfTasks; i++) {
             repository.save(new Task(
                     repository.nextId(),
-                    "task " + i,
+                    new TodoTask("task " + i),
                     false,
                     false,
                     LocalDateTime.of(2024, 12, 12, 12, 0)
