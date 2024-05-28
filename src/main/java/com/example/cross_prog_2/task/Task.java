@@ -1,6 +1,7 @@
 package com.example.cross_prog_2.task;
 
 import io.github.wimdeblauwe.jpearl.AbstractEntity;
+import io.github.wimdeblauwe.jpearl.AbstractVersionedEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tt_tasks")
-public class Task extends AbstractEntity<TaskId> {
+public class Task extends AbstractVersionedEntity<TaskId> {
 
     @NotNull
     private TodoTask todoTask;

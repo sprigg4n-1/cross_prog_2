@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-public class CreateTeamFormData {
+public class CreateTaskFormData {
     @NotBlank
     private String task;
 

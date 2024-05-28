@@ -4,5 +4,6 @@ CREATE TABLE tt_tasks (
     important BOOLEAN NOT NULL,
     checked BOOLEAN NOT NULL,
     date TIMESTAMP NOT NULL,
+    version BIGINT NOT NULL,
     PRIMARY KEY (id)
 );

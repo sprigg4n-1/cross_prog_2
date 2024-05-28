@@ -3,7 +3,6 @@ package com.example.cross_prog_2.tasks;
 import com.example.cross_prog_2.task.*;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
-import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +26,12 @@ public class TasksController {
     public String tasks(Model model, Pageable pageable)  {
         model.addAttribute("title", "Task");
         model.addAttribute("tasks", taskService.getTasks(pageable));
-        model.addAttribute("task", new CreateTeamFormData());
+        model.addAttribute("task", new CreateTaskFormData());
         return "tasks/list";
     }
 
     @PostMapping
-    public String createTask(@Valid @ModelAttribute("task") CreateTeamFormData formData, BindingResult result, Model model, Pageable pageable) {
+    public String createTask(@Valid @ModelAttribute("task") CreateTaskFormData formData, BindingResult result, Model model, Pageable pageable) {
         if (result.hasErrors()) {
             model.addAttribute("title", "Tasks");
             model.addAttribute("tasks", taskService.getTasks(pageable));
@@ -42,6 +41,32 @@ public class TasksController {
         taskService.createTask(formData.toParameters());
         return "redirect:/tasks";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editTask(@PathVariable("id") TaskId id, Model model) {
+        if (taskService.getTaskById(id) == null) {
+            return "redirect:/tasks";
+        }
+
+        EditTaskFormData formData = EditTaskFormData.fromTask(taskService.getTaskById(id));
+
+        model.addAttribute("task", formData);
+        model.addAttribute("taskId", id);
+        model.addAttribute("title", "Edit Task");
+        return "tasks/edit";
+    }
+
+    @PostMapping("/edit")
+    public String updateTask(@Valid @ModelAttribute("task") EditTaskFormData editTaskFormData, @ModelAttribute("taskId") TaskId id, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Edit Task");
+            return "tasks/edit";
+        }
+
+        taskService.updateTask(id, editTaskFormData.toParameters());
+        return "redirect:/tasks";
+    }
+
 
 
     @PostMapping("/delete/{id}")

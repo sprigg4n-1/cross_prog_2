@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html th:lang="|${#locale.language}-${#locale.country}|"
+      xmlns:x-transition="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+
+<head>
+    <title>Calenar</title>
+    <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+<body>
+
+<section layout:fragment="page-content">
+
+    <div class="flex flex-col items-center justify-between mb-10">
+        <h1 class="text-2xl font-bold">Edit Task</h1>
+    </div>
+
+    <div class="flex flex-col items-center justify-center mb-10">
+        <form th:action="@{/tasks/edit}" th:object="${task}" method="post" class="flex flex-col gap-5">
+            <input type="hidden" th:field="*{id}" />
+            <div>
+                <label for="task">Task:</label>
+                <input type="text" id="task" th:field="*{task}" class="form-input text-black"/>
+                <div th:if="${#fields.hasErrors('task')}" th:errors="*{task}" class="text-red-500"></div>
+            </div>
+            <div>
+                <label for="important">Important:</label>
+                <input type="checkbox" id="important" th:field="*{important}" class="form-checkbox"/>
+            </div>
+            <div>
+                <label for="checked">Checked:</label>
+                <input type="checkbox" id="checked" th:field="*{checked}" class="form-checkbox"/>
+            </div>
+            <div>
+                <label for="date">Date:</label>
+                <input type="datetime-local" id="date" th:field="*{date}" class="form-input text-black"/>
+                <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="text-red-500"></div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Update Task</button>
+            </div>
+        </form>
+    </div>
+
+</section>
+
+
+</body>
+</html>

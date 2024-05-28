@@ -7,4 +7,6 @@ public interface TaskService {
     Task createTask(CreateTaskParameters createTaskParameters);
     Page<Task> getTasks(Pageable pageable);
     void deleteTask(TaskId id);
+    Task getTaskById(TaskId id);
+    Task updateTask(TaskId taskId, EditTaskParameters editTaskParameters);
 }
